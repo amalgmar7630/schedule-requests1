@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'tasks.apps.TasksConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -80,7 +81,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'candidate',
+        'NAME': 'schedules',
         'PASSWORD': env('DATABASE_PASSWORD', default='postgres'),
         'USER': env('DATABASE_USERNAME', default='postgres'),
         'HOST': 'localhost',
