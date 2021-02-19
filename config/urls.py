@@ -14,8 +14,37 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+# Create our schema's view w/ the get_schema_view() helper method. Pass in the proper Renderers for swagger
+from django.views.generic import RedirectView
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Schedules API",
+        default_version='0.0.0'
+    ),
+    permission_classes=(permissions.IsAuthenticated, permissions.IsAdminUser)
+)
+
+
+class MainPageRedirectView(RedirectView):
+    pattern_name = 'rest_framework:login'
+
+    def get_redirect_url(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            self.pattern_name = 'schema-swagger-ui'
+        return super().get_redirect_url(*args, **kwargs)
+
 
 urlpatterns = [
+    path("", MainPageRedirectView.as_view(), name='open-page'),
+    path("drf-auth/", include('rest_framework.urls', namespace='rest_framework')),
+    # DRF Doc Urls
+    path("schema/", schema_view.with_ui('swagger', cache_timeout=None), name='schema-swagger-ui'),
     path('admin/', admin.site.urls),
+    path("tasks/", include("tasks.urls", namespace='Tasks')),
 ]
