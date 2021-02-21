@@ -32,7 +32,7 @@ SECRET_KEY = 'lxr(a77e$x+m+^s*&446#w%3*-l5w_riv3rxwgba33#(^gs_&q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'heroku-schedules.herokuapp.com']
 
 # Application definition
 
@@ -156,8 +156,8 @@ USE_L10N = True
 
 # settings/settings.py
 STATIC_ROOT = \
-    os.path.join(BASE_DIR, 'assets')
-STATIC_URL = '/assets/'
+    os.path.join(BASE_DIR, 'staticFiles')
+STATIC_URL = '/static/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
