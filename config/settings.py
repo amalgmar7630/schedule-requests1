@@ -76,6 +76,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
+        # this is not ago approach but just we need to keep sessionStorage authentication to keep credentials for
+        # both django admin and swagger and that necessities  csrf token so we need to disable it
         'config.sessionAuth.CsrfExemptSessionAuthentication'
     ),
 }
