@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 # reading .env file
 environ.Env.read_env()
-TIME_ZONE = env('TIMEZONE', default='UTC')
+TIME_ZONE = env('TIMEZONE', default='Africa/Tunis')
 USE_TZ = True
 ROOT_URLCONF = 'config.urls'
 
