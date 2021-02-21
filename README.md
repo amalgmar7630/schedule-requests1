@@ -34,7 +34,7 @@ You can test that Redis is working properly by typing this into your terminal:
        
 Starting The Worker Process:
 
-       celery worker -A config -l info -P threads
+       celery -A config worker -l info -P threads
        
  # Run server
  
