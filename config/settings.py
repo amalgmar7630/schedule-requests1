@@ -16,6 +16,8 @@ import environ
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from rest_framework.authentication import SessionAuthentication
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 # reading .env file
@@ -39,6 +41,7 @@ ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'heroku-schedules.herokuap
 INSTALLED_APPS = [
     'datetimeutc',
     'rest_framework',
+    'rest_framework_swagger',
     "allauth",
     "allauth.account",
     "rest_framework.authtoken",
@@ -73,8 +76,11 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication'
+        'config.sessionAuth.CsrfExemptSessionAuthentication'
     ),
+}
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False
 }
 # JWT settings
 
@@ -149,7 +155,6 @@ LANGUAGE_CODE = 'en-us'
 USE_I18N = True
 
 USE_L10N = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
