@@ -4,14 +4,16 @@
 
 - Create a Virtual Environnment with Python 3.9.1
 
-- Install PostgreSQL
+- Install PostgreSQL and create new DB using GUI pgAdmin
 
 - Install the backend requirements by rununing pip install -r requirememts.txt
 
-- Set some customized environnement variables in setting.py file
+- Set some customized environnement variables in .env file created under config folder
        
-       PASSWORD: 'postgres'
-       USER: 'postgres'
+       DATABASE_PASSWORD = postgres
+       DATABASE_USERNAME = postgres
+       TIMEZONE = 'Africa/Tunis'
+       DEBUG = True
 
 
 - Run python manage.py makemigrations to create new migrations based on the changes you have made to your models
