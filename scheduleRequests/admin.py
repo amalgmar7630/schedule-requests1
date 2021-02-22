@@ -3,10 +3,9 @@ from datetime import datetime
 import requests
 from django import forms
 from django.contrib import admin
-from django.forms import DateTimeField
 
 from .models import Request
-from scheduleRequests.generic import schedule_request_task, set_action
+from scheduleRequests.generic import set_action
 
 
 class RequestAdminForm(forms.ModelForm):
