@@ -13,14 +13,19 @@ def schedule_request_task(instance):
     ins = Request.objects.get(id=instance)
     action = getattr(requests, ins.method, None)
     if action:
-        response = action(headers=ins.header,
-                          url=ins.url,
-                          data=ins.body
-                          )
-        ins.request_response = response.json()
-        ins.status_code = response.status_code
-        ins.status_flow = 'completed'
-        ins.save()
+        try:
+            response = action(headers=ins.header,
+                              url=ins.url,
+                              data=ins.body
+                              )
+            ins.request_response = response.json()
+            ins.status_code = response.status_code
+            ins.status_flow = 'completed'
+            ins.save()
+        except requests.exceptions.RequestException as e:
+            ins.status_flow = 'completed'
+            ins.save()
+            raise SystemExit(e)
 
 
 def set_action(instance, requested_at, action, header, url, body):
@@ -29,12 +34,16 @@ def set_action(instance, requested_at, action, header, url, body):
     dt_string = now.strftime("%Y-%m-%d %H:%M")
     if dt_string == requested_at.strftime("%Y-%m-%d %H:%M"):
         instance.status_flow = 'completed'
-        response = action(headers=header,
-                          url=url,
-                          data=body
-                          )
-        instance.request_response = response.json()
-        instance.status_code = response.status_code
+        try:
+            response = action(headers=instance.header,
+                              url=instance.url,
+                              data=instance.body
+                              )
+            instance.request_response = response.json()
+            instance.status_code = response.status_code
+            instance.status_flow = 'completed'
+        except requests.exceptions.RequestException as e:
+            instance.status_flow = 'completed'
     else:
         instance.status_flow = 'pending'
         instance.status_code = None
