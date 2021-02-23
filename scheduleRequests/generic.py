@@ -26,7 +26,7 @@ def schedule_request_task(instance):
                               url=ins.url,
                               data=ins.body
                               )
-            ins.request_response = response.json() if instance.method != 'delete' else {}
+            ins.request_response = response.json() if ins.method != 'delete' else {}
             ins.status_code = response.status_code
             ins.status_flow = 'completed'
             ins.save()
