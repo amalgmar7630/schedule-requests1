@@ -18,7 +18,7 @@ def schedule_request_task(instance):
     action = getattr(requests, ins.method, None)
     if action:
         try:
-            headers = {'Content-Type': 'application/json'}
+            headers = {}
             headers.update(ins.header)
             response = action(headers=headers,
                               url=ins.url,
@@ -46,7 +46,7 @@ def set_action(instance, requested_at, action):
     dt_string = now.strftime("%Y-%m-%d %H:%M")
     if dt_string == requested_at.strftime("%Y-%m-%d %H:%M"):
         try:
-            headers = {'Content-Type': 'application/json'}
+            headers = {}
             headers.update(instance.header)
             response = action(headers=headers,
                               url=instance.url,
