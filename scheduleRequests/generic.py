@@ -26,7 +26,7 @@ def schedule_request_task(instance):
                               url=ins.url,
                               data=ins.body
                               )
-            ins.request_response = response.json()
+            ins.request_response = response.json() if instance.method != 'delete' else {}
             ins.status_code = response.status_code
             ins.status_flow = 'completed'
             ins.save()
@@ -56,7 +56,7 @@ def set_action(instance, requested_at, action):
                               url=instance.url,
                               data=instance.body
                               )
-            instance.request_response = response.json()
+            instance.request_response = response.json() if instance.method != 'delete' else {}
             instance.status_code = response.status_code
             instance.status_flow = 'completed'
         except requests.exceptions.RequestException as e:
