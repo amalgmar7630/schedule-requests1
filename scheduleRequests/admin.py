@@ -3,10 +3,9 @@ from datetime import datetime
 import requests
 from django import forms
 from django.contrib import admin
-from django.forms import DateTimeField
 
 from .models import Request
-from scheduleRequests.generic import schedule_request_task, set_action
+from scheduleRequests.generic import set_action
 
 
 class RequestAdminForm(forms.ModelForm):
@@ -44,9 +43,6 @@ class RequestAdmin(admin.ModelAdmin):
         super(RequestAdmin, self).save_model(request, obj, form, change)
         action = getattr(requests, form.cleaned_data.get('method'), None)
         requested_at = form.cleaned_data.get('requested_at')
-        header = form.cleaned_data.get('header')
-        url = form.cleaned_data.get('url')
-        body = form.cleaned_data.get('body')
         if action and requested_at:
-            obj = set_action(obj, requested_at, action, header, url, body)
+            obj = set_action(obj, requested_at, action)
             obj.save()
