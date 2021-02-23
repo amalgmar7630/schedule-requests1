@@ -19,7 +19,7 @@ def schedule_request_task(instance):
     if action:
         try:
             headers = {'Content-Type': 'application/json'}
-            response = action(headers=headers.update(instance.header),
+            response = action(headers=headers.update(ins.header),
                               url=ins.url,
                               data=ins.body
                               )
