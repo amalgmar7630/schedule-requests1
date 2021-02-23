@@ -11,13 +11,11 @@ class Request(models.Model):
     POST = 'post'
     GET = 'get'
     PUT = 'put'
-    PATCH = 'patch'
     DELETE = 'delete'
     METHODS = [
         (POST, 'post'),
         (GET, 'get'),
         (PUT, 'put'),
-        (PATCH, 'patch'),
         (DELETE, 'delete')
     ]
     method = models.CharField(_('Request Method'), max_length=30, choices=METHODS, null=False)

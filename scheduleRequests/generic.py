@@ -18,7 +18,8 @@ def schedule_request_task(instance):
     action = getattr(requests, ins.method, None)
     if action:
         try:
-            response = action(headers=ins.header,
+            headers = {'Content-Type': 'application/json'}
+            response = action(headers=headers.update(instance.header),
                               url=ins.url,
                               data=ins.body
                               )
@@ -43,12 +44,13 @@ def set_action(instance, requested_at, action):
     now = datetime.now()
     dt_string = now.strftime("%Y-%m-%d %H:%M")
     if dt_string == requested_at.strftime("%Y-%m-%d %H:%M"):
-        instance.status_flow = 'completed'
         try:
-            response = action(headers=instance.header,
+            headers = {'Content-Type': 'application/json'}
+            response = action(headers=headers.update(instance.header),
                               url=instance.url,
                               data=instance.body
                               )
+            print('response', response)
             instance.request_response = response.json()
             instance.status_code = response.status_code
             instance.status_flow = 'completed'
