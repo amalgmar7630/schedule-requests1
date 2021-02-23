@@ -19,6 +19,8 @@ def schedule_request_task(instance):
     if action:
         try:
             headers = {}
+            if ins.method == 'delete':
+                headers = {'Content-Type': 'application/json'}
             headers.update(ins.header)
             response = action(headers=headers,
                               url=ins.url,
@@ -47,6 +49,8 @@ def set_action(instance, requested_at, action):
     if dt_string == requested_at.strftime("%Y-%m-%d %H:%M"):
         try:
             headers = {}
+            if instance.method == 'delete':
+                headers = {'Content-Type': 'application/json'}
             headers.update(instance.header)
             response = action(headers=headers,
                               url=instance.url,
